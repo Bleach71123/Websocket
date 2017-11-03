@@ -1,7 +1,14 @@
-var app = require('http').createServer(handler)
-var io = require('socket.io')(app);
-var fs = require('fs');
+//var app = require('http').createServer(handler)
+//var io = require('socket.io')(app);
+//var fs = require('fs');
  
+
+
+const server = express()
+  .use((req, res) => res.sendFile(INDEX) )
+  .listen(PORT, () => console.log(`Listening on ${ PORT }`));
+
+const io = socketIO(server);
  
 function ball (x, y, xspeed, yspeed, id){
   this.moveLeft = false;
