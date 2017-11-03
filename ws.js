@@ -11,7 +11,7 @@ const server = express()
   .use((req, res) => res.sendFile(INDEX) )
   .listen(PORT, () => console.log(`Listening on ${ PORT }`));
 
-const io = socketIO(server);
+//const io = socketIO(server);
  
 function ball (x, y, xspeed, yspeed, id){
   this.moveLeft = false;
