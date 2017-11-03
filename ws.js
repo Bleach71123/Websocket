@@ -2,9 +2,9 @@
 //var io = require('socket.io')(app);
 //var fs = require('fs');
  
-var app = require('express')();
-var http = require('http').Server(app);
-var io = require('socket.io')(http);
+//var app = require('express')();
+//var http = require('http').Server(app);
+//var io = require('socket.io')(http);
 
 
 //const server = app()
@@ -13,6 +13,18 @@ var io = require('socket.io')(http);
 
 //const io = socketIO(server);
  
+
+var express = require('express'),
+    app = express(),
+    server = require('http').createServer(app),
+    io = require('socket.io').listen(server),
+
+server.listen(process.env.PORT || 3000);
+
+//----------------------------------------------------------------
+//----------------------------------------------------------------
+
+
 function ball (x, y, xspeed, yspeed, id){
   this.moveLeft = false;
   this.moveRight = false;
