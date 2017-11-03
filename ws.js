@@ -2,7 +2,7 @@ var app = require('http').createServer(handler)
 var io = require('socket.io')(app);
 var fs = require('fs');
  
-
+ 
 function ball (x, y, xspeed, yspeed, id){
   this.moveLeft = false;
   this.moveRight = false;
