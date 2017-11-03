@@ -1,1 +1,1 @@
-web: socket.io.js
+web: node ws
