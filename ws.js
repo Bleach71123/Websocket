@@ -2,6 +2,9 @@
 //var io = require('socket.io')(app);
 //var fs = require('fs');
  
+var app = require('express')();
+var http = require('http').Server(app);
+var io = require('socket.io')(http);
 
 
 const server = express()
