@@ -7,9 +7,9 @@ var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
 
-const server = app()
-  .use((req, res) => res.sendFile(INDEX) )
-  .listen(PORT, () => console.log(`Listening on ${ PORT }`));
+//const server = app()
+//  .use((req, res) => res.sendFile(INDEX) )
+//  .listen(PORT, () => console.log(`Listening on ${ PORT }`));
 
 //const io = socketIO(server);
  
