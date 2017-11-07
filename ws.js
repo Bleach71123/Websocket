@@ -22,7 +22,7 @@
 //server.listen(process.env.PORT || 3000);
 
 //Express 3/4
-/*
+
 var app = require('express')();
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
@@ -31,11 +31,11 @@ server.listen(80);
 
 app.get('/', function (req, res) {
   res.sendfile(__dirname + '/index.html');
-});*/
+});
 
 //Express 2.X
-
-var app = require('express').createServer();
+/*
+var app = require('express').createServer();  //CREATE SERVER NOT A FUNCTION
 var io = require('socket.io')(app);
 
 app.listen(80);
@@ -43,7 +43,7 @@ app.listen(80);
 app.get('/', function (req, res) {
   res.sendFile(__dirname + '/index.html');
 });
-
+*/
 
 //----------------------------------------------------------------
 //----------------------------------------------------------------
