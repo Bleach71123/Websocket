@@ -1,1 +1,1 @@
-web: node ws
+web: node ws.js
