@@ -2,28 +2,28 @@
 //var io = require('socket.io')(app);
 //var fs = require('fs');
  
-//var app = require('express')();
-//var http = require('http').Server(app);
-//var io = require('socket.io')(http);
+//Works Locally
+//-------------------------------------------------
 
 
-//const server = app()
-//  .use((req, res) => res.sendFile(INDEX) )
-//  .listen(PORT, () => console.log(`Listening on ${ PORT }`));
+const express = require('express');
+const socketIO = require('socket.io');
+const path = require('path');
 
-//const io = socketIO(server);
- 
+const PORT = process.env.PORT || 3000;
+const INDEX = path.join(__dirname, 'index.html');
 
-//var express = require('express');
-//var app = express();
-//var server = require('http').createServer(app);
-//var io = require('socket.io').listen(server);
+const server = express()
+  .use((req, res) => res.sendFile(INDEX) )
+  .listen(PORT, () => console.log(`Listening on ${ PORT }`));
 
-//server.listen(process.env.PORT || 3000);
+const io = socketIO(server);
 
-//Express 3/4
 
-var app = require('express')();
+
+//-------------------------------------------------------------Express 3/4
+
+/*var app = require('express')();
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
 
@@ -31,9 +31,9 @@ server.listen(3000);
 
 app.get('/', function (req, res) {
   res.sendfile(__dirname + '/index.html');    //Error: Listen EACCES 0.0.0.0:80
-});
+});*/
 
-//Express 2.X
+//-------------------------------------------------------------Express 2.X
 /*
 var app = require('express').createServer();  //CREATE SERVER NOT A FUNCTION
 var io = require('socket.io')(app);
