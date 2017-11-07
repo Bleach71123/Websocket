@@ -68,7 +68,7 @@ var balls = [];
 var id = 0;
 var connections = [];
 
-app.listen(80);
+//app.listen(80);
 
 function handler (req, res) {
   fs.readFile(__dirname + '/index.html',
