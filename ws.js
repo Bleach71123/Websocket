@@ -4,9 +4,9 @@
  
 //Works Locally
 //-------------------------------------------------
+//Works
 
-
-const express = require('express');
+/*const express = require('express');
 const socketIO = require('socket.io');
 const path = require('path');
 
@@ -17,13 +17,13 @@ const server = express()
   .use((req, res) => res.sendFile(INDEX) )
   .listen(PORT, () => console.log(`Listening on ${ PORT }`));
 
-const io = socketIO(server);
+const io = socketIO(server);*/
 
 
 
 //-------------------------------------------------------------Express 3/4
 
-/*var app = require('express')();
+var app = require('express')();
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
 
@@ -31,7 +31,7 @@ server.listen(3000);
 
 app.get('/', function (req, res) {
   res.sendfile(__dirname + '/index.html');    //Error: Listen EACCES 0.0.0.0:80
-});*/
+});
 
 //-------------------------------------------------------------Express 2.X
 /*
