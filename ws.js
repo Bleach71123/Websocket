@@ -1,6 +1,8 @@
-//var app = require('http').createServer(handler)
-//var io = require('socket.io')(app);
-//var fs = require('fs');
+/*var app = require('http').createServer(handler)
+var io = require('socket.io')(app);
+var fs = require('fs');
+
+app.listen(80); */
  
 //Works Locally
 //-------------------------------------------------
@@ -10,7 +12,7 @@ const express = require('express');
 const socketIO = require('socket.io');
 const path = require('path');
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 80;
 const INDEX = path.join(__dirname, 'index.html');
 
 const server = express()
@@ -18,6 +20,7 @@ const server = express()
   .listen(PORT, () => console.log(`Listening on ${ PORT }`));
 
 const io = socketIO(server);
+
 
 
 
@@ -68,7 +71,6 @@ var balls = [];
 var id = 0;
 var connections = [];
 
-//app.listen(80);
 
 function handler (req, res) {
   fs.readFile(__dirname + '/index.html',

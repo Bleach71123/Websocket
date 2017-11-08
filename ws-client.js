@@ -78,7 +78,7 @@ document.addEventListener('keydown', function(event) {
         socket.emit('moveUp', {id: id});
     }
     if(event.keyCode == 83) {
-        socket.emit('moveDown', {id: id});s
+        socket.emit('moveDown', {id: id});
     }
 });
 
