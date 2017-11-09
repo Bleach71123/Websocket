@@ -1,4 +1,4 @@
-var socket = io();
+var socket = io('https://fathomless-dawn-88229.herokuapp.com/');
 
 var canvas = document.getElementById("a");
 var ctx = canvas.getContext("2d");
