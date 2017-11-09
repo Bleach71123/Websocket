@@ -6,7 +6,7 @@ var ctx = canvas.getContext("2d");
 var id;
 
 var ballX = 0;
-var ballY = 0;
+var ballY = 0; 
 
     socket.on('init', function (data) {
         id = data.id;
@@ -41,7 +41,7 @@ var ballY = 0;
         }
 
         for (var i = 0; i < data.balls.length; i++) {
-            console.log(data.balls[i].id);
+            //console.log(data.balls[i].id);
             if (data.balls[i].id == id){
                 ctx.fillStyle = "#0000BB";
                 ctx.beginPath();

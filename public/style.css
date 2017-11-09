@@ -6,7 +6,7 @@ body {
   
 body input,
 body label {
-    display: block;
+    display: block; 
 }
 
 h1 {
