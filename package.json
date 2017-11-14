@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
   "name": "nodejs-ex",
   "version": "0.0.1",
   "description": "Node.js sample app for OpenShift 3",
@@ -31,4 +32,19 @@
     "url": "http://github.com/openshift/nodejs-ex/issues"
   },
   "homepage": "http://github.com/openshift/nodejs-ex"
+=======
+  "name": "servertest",
+  "version": "1.0.0",
+  "description": "Testing my project on a server",
+  "main": "socket.io.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Bleach",
+  "license": "ISC",
+  "dependencies": {
+    "express": "4.16.2",
+    "socket.io": "2.0.4"
+  }
+>>>>>>> 7f4fece3e0988d37472ae09918f6611cff358fd8
 }
