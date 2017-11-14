@@ -2,7 +2,7 @@
 var io = require('socket.io')(app);
 var fs = require('fs');
 
-app.listen(80); */
+app.listen(80); */ 
  
 //Works Locally
 //-------------------------------------------------
@@ -66,12 +66,12 @@ function ball (x, y, xspeed, yspeed, id){
   this.id = id;
 }
 
-var mapWidth = mapHeight = 1;
-
 var balls = [];
 var id = 0;
 var connections = [];
+var borderX = borderY = 10000;
 
+console.log("Active");
 
 function handler (req, res) {
   fs.readFile(__dirname + '/index.html',
@@ -87,17 +87,13 @@ function handler (req, res) {
 
 io.on('connection', function (socket) {
   connections.push(socket);
-  console.log("New Connection");
+  console.log("\nNew Connection");
 
   socket.emit('init', {id: connections.length});
   socket.on('init', function(data) {
-  	width = data.width;
-  	height = data.height;
-    mapWidth = width / 200;
-    mapHeight = height / 200;
 
-    var x = Math.floor(Math.random() * width);
-    var y = Math.floor(Math.random() * height);
+    var x = Math.floor(Math.random() * borderX);
+    var y = Math.floor(Math.random() * borderY);
     var b = new ball(x, y, 1, 1, data.id);
     balls.push(b);                          //Adds new ball to array of balls
 
@@ -111,6 +107,7 @@ io.on('connection', function (socket) {
     console.log(output);
     
   });
+
 
   socket.on('moveLeft', function(data){
     if (balls[data.id - 1] != null)
@@ -146,6 +143,14 @@ io.on('connection', function (socket) {
       balls[data.id - 1].moveUp = false;
   });
 
+  /*socket.on('moved', function(data){
+    var index = (balls.findIndex(function(ballId){
+      return ballId == data.id;
+    }));
+    balls[index] = new ball(data.x, data.y, 1, 1, data.id);
+  });*/
+
+
   socket.on('disconnect', function(){
 
     function isDisconnected(disconnected){
@@ -169,15 +174,15 @@ function moveBall(){
   for (var i = 0; i < balls.length; i++) {
     if (balls[i].moveLeft && balls[i].x - 1 > 0)
       balls[i].x--;
-    if (balls[i].moveRight && balls[i].x + 1 < 1000)
+    if (balls[i].moveRight && balls[i].x + 1 < borderX)
       balls[i].x++;
-    if (balls[i].moveDown && balls[i].y + 1 < 1000)
+    if (balls[i].moveDown && balls[i].y + 1 < borderY)
       balls[i].y++;
     if (balls[i].moveUp && balls[i].y - 1 > 0)
       balls[i].y--;
     }
 
-  io.sockets.emit('move', {balls: balls, width: mapWidth, height: mapHeight});
+  io.sockets.emit('move', {balls: balls, borderX: borderX, borderY: borderY});
 }
 
 var updateInterval = setInterval(moveBall, 0);

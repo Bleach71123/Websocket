@@ -1,7 +1,15 @@
-var socket = io();
+var socket = io('http://localhost');
 
 var canvas = document.getElementById("a");
 var ctx = canvas.getContext("2d");
+document.getElementById('a').setAttribute('width', $(window).width());
+document.getElementById('a').setAttribute('height', $(window).height());
+
+window.addEventListener("resize", function resize(){
+    document.getElementById('a').setAttribute('width', $(window).width());
+    document.getElementById('a').setAttribute('height', $(window).height());
+});
+
  
 var id;
 
@@ -11,9 +19,8 @@ var ballY = 0;
     socket.on('init', function (data) {
         id = data.id;
         console.log('Created ball: ' + id); 
-        //document.querySelector("p").innerHTML = id;
         document.querySelector("h1").innerHTML = "";
-        socket.emit('init', {width: canvas.width, height: canvas.height, id: id});     
+        socket.emit('init', {id: id});     
     });
 
     socket.on('move', function (data) {
@@ -22,44 +29,61 @@ var ballY = 0;
         var gridX = ballX;
         var gridY = ballY;
 
-        while (gridX > 200)
-            gridX -= 200;
-        while (gridY > 200)
-            gridY -= 200;
+        while (gridX > 414)
+            gridX -= 414;
+        while (gridY > 400)
+            gridY -= 400;
 
-        gridX *= -0.005;
-        gridY *= -0.005;
+        gridX *= -0.5;
+        gridY *= -0.5;
 
-        for (var i = gridX; i < data.width; i++){
-            for (var c = gridY; c < data.height; c++){
-                ctx.fillStyle = "#e0e0e0";
-                ctx.beginPath();
-                ctx.rect(i * 200, c * 200, 196, 196);
-                ctx.closePath();
-                ctx.fill();
-            }
-        }
+        document.getElementById('a').style.backgroundPosition = gridX + "px " + gridY + "px"; //Moves background
+
 
         for (var i = 0; i < data.balls.length; i++) {
-            //console.log(data.balls[i].id);
-            if (data.balls[i].id == id){
-                ctx.fillStyle = "#0000BB";
+            if (data.balls[i].id == id){                                                      //Draws Player
+
                 ctx.beginPath();
+                ctx.fillStyle = "#EEEEFF";
+                ctx.arc(canvas.width / 2, canvas.height / 2, 25, 0, Math.PI * 2);
+                ctx.closePath();
+                ctx.fill();
+
+                ctx.beginPath();
+                ctx.fillStyle = "#0000BB";
                 //ctx.arc(data.balls[i].x, data.balls[i].y, 20, 0, Math.PI * 2);
                 ctx.arc(canvas.width / 2, canvas.height / 2, 20, 0, Math.PI * 2);
                 ctx.closePath();
                 ctx.fill();
+
                 ballX = data.balls[i].x;
                 ballY = data.balls[i].y;
             }
-            else {
-                ctx.fillStyle = "#BB0000";
+            else {                                                                              //Draws enemies (Other players)
+
                 ctx.beginPath();
+                ctx.fillStyle = "#bb9900";
+                ctx.arc(data.balls[i].x - (ballX + gridX) + canvas.width / 2, data.balls[i].y - (ballY + gridY) + canvas.height / 2, 25, 0, Math.PI * 2);
+                ctx.closePath();
+                ctx.fill();
+
+                ctx.beginPath();
+                ctx.fillStyle = "#BB0000";
                 ctx.arc(data.balls[i].x - (ballX + gridX) + canvas.width / 2, data.balls[i].y - (ballY + gridY) + canvas.height / 2, 20, 0, Math.PI * 2);
                 ctx.closePath();
                 ctx.fill();
             }
         }
+
+        /*ctx.beginPath();                                                                       //My attempt to draw a boundary
+        ctx.fillStyle = "#551122";
+        ctx.rect(-10 - (ballX + gridX) + canvas.width / 2, -10 - (ballY + gridY) + canvas.height / 2, 20, 10);
+        ctx.rect(-10 - (ballX + gridX) + canvas.width / 2, -10 - (ballY + gridY) + canvas.height / 2, 10, data.borderY + 20);
+        ctx.rect(data.borderX - (ballX + gridX) + canvas.width / 2, -10 - (ballY + gridY) + canvas.height / 2, 10, data.borderY + 20);
+        ctx.rect(-10 - (ballX + gridX) + canvas.width / 2, data.borderY - (ballY + gridY) + canvas.height / 2, data.borderX + 20, 10);
+        ctx.closePath();
+        ctx.fill();*/
+
     });
 
     socket.on('setBallPos', function(data) {
@@ -67,32 +91,54 @@ var ballY = 0;
         ballY = data.y;
     });
 
+//var moveLeft = moveRight = moveUp = moveDown = false;
+
 document.addEventListener('keydown', function(event) {
     if(event.keyCode == 65) {
         socket.emit('moveLeft', {id: id});
+        //moveLeft = true;
     }
     if(event.keyCode == 68) {
         socket.emit('moveRight', {id: id});
+        //moveRight = true;
     }
     if(event.keyCode == 87) {
         socket.emit('moveUp', {id: id});
+        //moveUp = true;
     }
     if(event.keyCode == 83) {
         socket.emit('moveDown', {id: id});
+        //moveDown = true;
     }
 });
 
 document.addEventListener('keyup', function(event) {
     if(event.keyCode == 65) {
         socket.emit('stopLeft', {id: id});
+        //moveLeft = false;
     }
     if(event.keyCode == 68) {
         socket.emit('stopRight', {id: id});
+        //moveRight = false;
     }
     if(event.keyCode == 87) {
         socket.emit('stopUp', {id: id});
+        //moveUp = false;
     }
     if(event.keyCode == 83) {
         socket.emit('stopDown', {id: id});
+        //moveDown = false;
     }
 });
+
+/*function move (){
+    if (moveLeft && ballX - 1 > 0)
+      ballX--;
+    if (moveRight && ballX + 1 < 1000)
+      ballX++;
+    if (moveDown && ballY + 1 < 1000)
+      ballY++;
+    if (moveUp && ballY - 1 > 0)
+      ballY--;
+    socket.emit('moved', {x: ballX, y: ballY, id: id});
+}*/
